@@ -19,7 +19,11 @@ export const Route = createFileRoute("/service-areas/$slug")({
       return { meta: [{ title: "Service area not found" }, { name: "robots", content: "noindex" }] };
     }
     const { area } = loaderData;
-    const title = `Epoxy Flooring in ${area.name} BC | Pacific Floors and Coatings`;
+    const base = `Epoxy Flooring in ${area.name} BC`;
+    const title =
+      [`${base} | Pacific Floors & Coatings`, `${base} | Pacific Floors`, `${base} | Pacific`].find(
+        (c) => c.length <= 59,
+      ) ?? base.slice(0, 59);
     const description = `Garage, commercial, and industrial epoxy flooring in ${area.name}, BC. Metallic, flake, solid, and sealed concrete coatings with free on-site estimates.`;
     const url = `${BASE}/service-areas/${area.slug}`;
     return {
