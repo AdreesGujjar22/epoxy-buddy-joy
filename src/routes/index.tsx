@@ -207,7 +207,7 @@ function Home() {
             </Link>
           </div>
           <div className="mt-9 grid gap-5 sm:grid-cols-2">
-            {services.map((s) => (
+            {featuredServices.map((s) => (
               <Link
                 key={s.slug}
                 to="/services/$slug"
@@ -215,8 +215,8 @@ function Home() {
                 className="group relative overflow-hidden rounded-md border border-border"
               >
                 <img
-                  src={images[s.image]}
-                  alt={s.title}
+                  src={serviceImage(s)}
+                  alt={serviceAlt[s.slug] ?? `${s.title} in Surrey, BC`}
                   loading="lazy"
                   width={1200}
                   height={800}
@@ -228,7 +228,16 @@ function Home() {
                 </div>
               </Link>
             ))}
+          </div>
+          <div className="mt-9 text-center">
+            <Link
+              to="/services"
+              className="inline-flex rounded-md bg-primary px-7 py-3 text-xs font-bold text-primary-foreground transition hover:brightness-110"
+            >
+              View All Services
+            </Link>
           </div></div>
+
         </section>
 
         <section className="border-y border-primary/25 bg-background py-20">
