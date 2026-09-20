@@ -8,6 +8,13 @@ import { serviceImage } from "@/lib/service-images";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { reviews } from "@/lib/reviews";
 import { googleReviewsQuery } from "@/lib/google-reviews.functions";
+import { Button } from "@/components/ui/button";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import hero from "@/assets/hero-garage.jpg";
 import metallic from "@/assets/metallic-epoxy.jpg";
 import flake from "@/assets/flake-epoxy.jpg";
@@ -32,7 +39,6 @@ const serviceAlt: Record<string, string> = {
   "commercial-epoxy-flooring": "Commercial epoxy floor coating in a Metro Vancouver warehouse with safety line markings",
   "concrete-floor-sealing": "Polished and sealed concrete floor finished by Pacific Floors and Coatings",
 };
-
 
 const faqs = [
   {
@@ -134,7 +140,7 @@ export const Route = createFileRoute("/")({
           hasOfferCatalog: {
             "@type": "OfferCatalog",
             name: "Epoxy flooring and concrete coating services",
-            itemListElement: services.map((s) => ({
+            itemListElement: services.slice(0, 12).map((s) => ({
               "@type": "Offer",
               itemOffered: {
                 "@type": "Service",
@@ -151,7 +157,6 @@ export const Route = createFileRoute("/")({
           ],
           aggregateRating: { "@type": "AggregateRating", ratingValue: "4.9", reviewCount: "30" },
         }),
-
       },
       {
         type: "application/ld+json",
@@ -179,7 +184,7 @@ export const Route = createFileRoute("/")({
 
 function Home() {
   const { data } = useSuspenseQuery(googleReviewsQuery);
-  const list = data.reviews.length > 0 ? data.reviews : reviews;
+  const list = data.reviews.length > 0 ? data.reviews : reviews.map((r) => ({ ...r, relativeTime: r.location }));
   const firstReview = list[0];
   const secondReview = list[1];
 
@@ -204,29 +209,23 @@ function Home() {
               <h1 className="mt-4 text-4xl font-black leading-[1.08] sm:text-[55px]">
                 Epoxy Flooring Company in Surrey BC
               </h1>
-              <p className="mt-5 max-w-xl text-sm leading-6 text-muted-foreground">
+              <p className="mt-5 max-w-xl text-sm leading-6 text-muted-foreground text-pretty">
                 Upgrade your space with a beautiful floor that's made to last. At Pacific Floors and Coatings we
                 deliver clean, durable coatings for garages, basements, showrooms, and industrial
                 spaces across Surrey, BC and Metro Vancouver.
               </p>
-               <ul className="mt-6 space-y-2 text-xs font-bold uppercase">
-                 <li>◉&nbsp; 10+ years of experience</li>
-                 <li>◉&nbsp; Fast, well-managed installations</li>
-                 <li>◉&nbsp; Competitive warranty on every job</li>
+              <ul className="mt-6 space-y-2 text-xs font-bold uppercase">
+                <li>◉&nbsp; 10+ years of experience</li>
+                <li>◉&nbsp; Fast, well-managed installations</li>
+                <li>◉&nbsp; Competitive warranty on every job</li>
               </ul>
               <div className="mt-8 flex flex-wrap gap-3">
-                <Link
-                  to="/services"
-                  className="rounded-md bg-primary px-6 py-3 text-xs font-bold text-primary-foreground transition hover:brightness-110"
-                >
-                  View Our Services
-                </Link>
-                <a
-                  href={site.phoneHref}
-                  className="rounded-md border border-border px-6 py-3 text-xs font-bold transition hover:border-primary"
-                >
-                  Call {site.phone}
-                </a>
+                <Button asChild size="lg" className="h-auto px-6 py-3.5 text-xs font-bold uppercase tracking-wider">
+                  <Link to="/services">View Our Services</Link>
+                </Button>
+                <Button asChild variant="outline" size="lg" className="h-auto px-6 py-3.5 text-xs font-bold uppercase tracking-wider">
+                  <a href={site.phoneHref}>Call {site.phone}</a>
+                </Button>
               </div>
             </div>
             <QuoteForm />
@@ -235,67 +234,86 @@ function Home() {
 
         <section className="relative border-t border-border bg-surface py-20">
           <div className="mx-auto max-w-[1170px] px-5">
-          <p className="eyebrow">Our services</p>
-          <div className="flex flex-wrap items-end justify-between gap-4">
-            <h2 className="mt-2 text-3xl font-black sm:text-[36px]">
-              Garage, Commercial & Industrial Epoxy Flooring
-            </h2>
-            <Link to="/services" className="text-sm font-semibold text-primary">
-              View all services →
-            </Link>
-          </div>
-          <div className="mt-9 grid gap-5 sm:grid-cols-2">
-            {featuredServices.map((s) => (
-              <Link
-                key={s.slug}
-                to="/services/$slug"
-                params={{ slug: s.slug }}
-                className="interactive-panel group relative overflow-hidden"
-              >
-                <img
-                  src={serviceImage(s)}
-                  alt={serviceAlt[s.slug] ?? `${s.title} in Surrey, BC`}
-                  loading="lazy"
-                  width={1200}
-                  height={800}
-                  className="h-64 w-full object-cover transition duration-500 group-hover:scale-105 lg:h-[300px]"
-                />
-                <div className="absolute inset-x-0 bottom-0 flex items-center justify-between bg-background/90 px-5 py-4">
-                  <h3 className="text-base font-bold">{s.title}</h3>
-                  <span className="text-primary">→</span>
-                </div>
+            <p className="eyebrow">Our services</p>
+            <div className="flex flex-wrap items-end justify-between gap-4">
+              <h2 className="mt-2 text-3xl font-black sm:text-[36px]">
+                Garage, Commercial & Industrial Epoxy Flooring
+              </h2>
+              <Link to="/services" className="text-sm font-semibold text-primary transition-colors hover:text-primary/80">
+                View all services →
               </Link>
-            ))}
+            </div>
+            <div className="mt-9 grid gap-5 sm:grid-cols-2">
+              {featuredServices.map((s) => (
+                <Link
+                  key={s.slug}
+                  to="/services/$slug"
+                  params={{ slug: s.slug }}
+                  className="group relative overflow-hidden rounded-md border border-border"
+                >
+                  <img
+                    src={serviceImage(s)}
+                    alt={serviceAlt[s.slug] ?? `${s.title} in Surrey, BC`}
+                    loading="lazy"
+                    width={1200}
+                    height={800}
+                    className="h-64 w-full object-cover transition duration-500 group-hover:scale-105 lg:h-[300px]"
+                  />
+                  <div className="absolute inset-x-0 bottom-0 flex items-center justify-between bg-background/90 px-5 py-4">
+                    <h3 className="text-base font-bold">{s.title}</h3>
+                    <span className="text-primary group-hover:translate-x-1 transition-transform">→</span>
+                  </div>
+                </Link>
+              ))}
+            </div>
+            <div className="mt-9 text-center">
+              <Button asChild className="h-auto px-8 py-3.5 text-xs font-bold uppercase tracking-wider">
+                <Link to="/services">View All Services</Link>
+              </Button>
+            </div>
           </div>
-          <div className="mt-9 text-center">
-            <Link
-              to="/services"
-              className="inline-flex rounded-md bg-primary px-7 py-3 text-xs font-bold text-primary-foreground transition hover:brightness-110"
-            >
-              View All Services
-            </Link>
-          </div></div>
-
         </section>
 
         <section className="border-y border-primary/25 bg-background py-20">
-          <div className="mx-auto grid max-w-[1170px] items-center gap-12 px-5 md:grid-cols-2">
+          <div className="mx-auto grid max-w-[1170px] items-center gap-12 px-5 md:grid-cols-2 text-pretty">
             <figure className="order-2 border-l border-primary/40 pl-8 md:order-1">
-              <blockquote className="text-lg leading-8 text-muted-foreground">“{firstReview.text}”</blockquote>
-              <figcaption className="mt-6 text-sm font-bold text-foreground">{firstReview.name} <span className="font-normal text-muted-foreground">— {firstReview.location}</span></figcaption>
+              <blockquote className="text-lg leading-8 text-muted-foreground italic">“{firstReview.text}”</blockquote>
+              <figcaption className="mt-6 text-sm font-bold text-foreground">
+                {firstReview.name} <span className="font-normal text-muted-foreground">— {firstReview.location}</span>
+              </figcaption>
               <div className="mt-2 text-primary">★★★★★</div>
             </figure>
-            <img src={metallic} alt="Luxury black metallic epoxy garage floor" className="order-1 h-[330px] w-full rounded-md object-cover md:order-2" loading="lazy" />
+            <img
+              src={metallic}
+              alt="Luxury black metallic epoxy garage floor"
+              width={1200}
+              height={800}
+              className="order-1 h-[330px] w-full rounded-md object-cover md:order-2 shadow-2xl"
+              loading="lazy"
+            />
           </div>
         </section>
 
-        <section className="border-b border-primary/25 bg-surface py-20">
+        <section className="border-b border-primary/25 bg-surface py-20 text-pretty">
           <div className="mx-auto grid max-w-[1170px] items-center gap-12 px-5 md:grid-cols-2">
-            <img src={sealed} alt="Finished residential epoxy floor" className="h-[380px] w-full rounded-md object-cover" loading="lazy" />
+            <img
+              src={sealed}
+              alt="Finished residential epoxy floor"
+              width={1200}
+              height={800}
+              className="h-[380px] w-full rounded-md object-cover shadow-2xl"
+              loading="lazy"
+            />
             <div>
               <p className="eyebrow">Residential, commercial, industrial</p>
-              <h2 className="mt-3 text-3xl font-black leading-tight sm:text-[36px]">Flooring Solutions for Any Project, From Single-Car Garages to Commercial & Industrial Spaces</h2>
-              <p className="mt-5 text-sm leading-6 text-muted-foreground">Whether you're a homeowner, a business owner, or a general contractor, we deliver durable epoxy flooring and floor coating solutions tailored to your project needs. Our consultants help guide you through the ideal system for your space.</p>
+              <h2 className="mt-3 text-3xl font-black leading-tight sm:text-[36px]">
+                Flooring Solutions for Any Project, From Single-Car Garages to Commercial & Industrial Spaces
+              </h2>
+              <p className="mt-5 text-sm leading-6 text-muted-foreground">
+                Whether you're a homeowner, a business owner, or a general contractor, we deliver durable epoxy flooring
+                and floor coating solutions tailored to your project needs. Our consultants help guide you through the
+                ideal system for your space.
+              </p>
             </div>
           </div>
         </section>
@@ -303,21 +321,31 @@ function Home() {
         <section className="mx-auto max-w-[1170px] px-5 py-20">
           <p className="eyebrow">Our reviews speak for themselves</p>
           <div className="flex flex-wrap items-end justify-between gap-4">
-            <h2 className="mt-2 text-3xl font-extrabold sm:text-4xl">
+            <h2 className="mt-2 text-3xl font-black sm:text-4xl">
               See what our customers have to say
             </h2>
-            <Link to="/reviews" className="text-sm font-semibold text-primary">
+            <Link to="/reviews" className="text-sm font-semibold text-primary transition-colors hover:text-primary/80">
               View all reviews →
             </Link>
           </div>
           <p className="mt-3 text-sm text-muted-foreground">
             Rated {site.rating} on Google from customers across Surrey, BC and Metro Vancouver.
           </p>
-          <div className="mt-8 grid items-center gap-10 md:grid-cols-[1fr_1fr]">
-            <img src={flake} alt="Completed Pacific Floors and Coatings garage floor" className="h-[330px] w-full rounded-md object-cover" loading="lazy" />
+          <div className="mt-8 grid items-center gap-10 md:grid-cols-[1fr_1fr] text-pretty">
+            <img
+              src={flake}
+              alt="Completed Pacific Floors and Coatings garage floor"
+              width={1200}
+              height={800}
+              className="h-[330px] w-full rounded-md object-cover shadow-2xl"
+              loading="lazy"
+            />
             <figure className="border-l border-primary/40 pl-8">
-              <blockquote className="text-base leading-7 text-muted-foreground">“{secondReview.text}”</blockquote>
-              <figcaption className="mt-5 text-sm font-bold">{secondReview.name}<span className="block text-xs font-normal text-muted-foreground">{secondReview.location}</span></figcaption>
+              <blockquote className="text-base leading-7 text-muted-foreground italic">“{secondReview.text}”</blockquote>
+              <figcaption className="mt-5 text-sm font-bold">
+                {secondReview.name}
+                <span className="block text-xs font-normal text-muted-foreground">{secondReview.location}</span>
+              </figcaption>
               <div className="mt-2 text-primary">★★★★★</div>
             </figure>
           </div>
@@ -325,34 +353,58 @@ function Home() {
 
         <section className="border-y border-border bg-surface py-20">
           <div className="mx-auto max-w-4xl px-4">
-            <h2 className="text-center text-3xl font-extrabold sm:text-4xl">
+            <h2 className="text-center text-3xl font-black sm:text-4xl">
               Frequently asked questions
             </h2>
-            <div className="mt-8 space-y-3">
-               {faqs.map((f) => (
-                 <details key={f.q} className="border border-border bg-background/40 px-5 py-4">
-                  <summary className="cursor-pointer list-none text-sm font-semibold">{f.q}</summary>
-                  <p className="mt-3 text-sm text-muted-foreground">{f.a}</p>
-                </details>
-              ))}
+            <div className="mt-8">
+              <Accordion type="single" collapsible className="w-full space-y-3">
+                {faqs.map((f, i) => (
+                  <AccordionItem key={i} value={`faq-${i}`} className="border border-border bg-background/40 px-5 transition-colors data-[state=open]:bg-background/60">
+                    <AccordionTrigger className="text-sm font-semibold hover:no-underline py-4">
+                      {f.q}
+                    </AccordionTrigger>
+                    <AccordionContent className="text-sm leading-6 text-muted-foreground">
+                      {f.a}
+                    </AccordionContent>
+                  </AccordionItem>
+                ))}
+              </Accordion>
             </div>
           </div>
         </section>
 
         <section className="relative overflow-hidden py-20">
-          <img src={installer} alt="Pacific Floors and Coatings crew serving Surrey, BC" className="absolute inset-0 h-full w-full object-cover opacity-15" loading="lazy" />
+          <img
+            src={installer}
+            alt="Pacific Floors and Coatings crew serving Surrey, BC"
+            width={1600}
+            height={1008}
+            className="absolute inset-0 h-full w-full object-cover opacity-15"
+            loading="lazy"
+          />
           <div className="absolute inset-0 bg-gradient-to-r from-background via-background/95 to-background/70" />
           <div className="relative mx-auto grid max-w-[1170px] gap-12 px-5 md:grid-cols-2">
-            <div>
+            <div className="text-pretty">
               <p className="eyebrow">Local service areas</p>
               <h2 className="mt-3 text-3xl font-black sm:text-[36px]">Dedicated to Serving Surrey Businesses and Families</h2>
               <ul className="mt-6 space-y-4 text-sm leading-6 text-muted-foreground">
-                <li><strong className="text-foreground">On-Site Consultations:</strong> Delivered commercial, industrial, and residential floor preparation guidance directly to your property.</li>
-                <li><strong className="text-foreground">Fully Equipped Service Crews:</strong> Supported by professional diamond grinders and dustless vacuums.</li>
-                <li><strong className="text-foreground">Comprehensive Regional Coverage:</strong> Offering transparent pricing throughout Surrey, BC and Metro Vancouver.</li>
+                <li>
+                  <strong className="text-foreground">On-Site Consultations:</strong> Delivered commercial, industrial,
+                  and residential floor preparation guidance directly to your property.
+                </li>
+                <li>
+                  <strong className="text-foreground">Fully Equipped Service Crews:</strong> Supported by professional
+                  diamond grinders and dustless vacuums.
+                </li>
+                <li>
+                  <strong className="text-foreground">Comprehensive Regional Coverage:</strong> Offering transparent
+                  pricing throughout Surrey, BC and Metro Vancouver.
+                </li>
               </ul>
-              <div className="mt-6 flex flex-wrap gap-x-5 gap-y-2 text-xs font-semibold text-primary">
-                {['Surrey','Burnaby','Coquitlam','Richmond','Delta','Langley','Abbotsford'].map((area) => <span key={area}>{area}</span>)}
+              <div className="mt-6 flex flex-wrap gap-x-5 gap-y-2 text-xs font-bold uppercase tracking-wider text-primary">
+                {["Surrey", "Burnaby", "Coquitlam", "Richmond", "Delta", "Langley", "Abbotsford"].map((area) => (
+                  <span key={area}>{area}</span>
+                ))}
               </div>
             </div>
           </div>
@@ -365,36 +417,62 @@ function Home() {
               <h2 className="mt-2 text-3xl font-black sm:text-[36px]">
                 Visit Our Surrey, BC Epoxy Flooring Shop
               </h2>
-              <a
-                href={site.mapLink}
-                target="_blank"
-                rel="noreferrer noopener"
-                className="text-sm font-semibold text-primary"
-              >
-                Open in Google Maps →
-              </a>
+              <Button asChild variant="outline" size="sm">
+                <a href={site.mapLink} target="_blank" rel="noreferrer">
+                  Get Directions →
+                </a>
+              </Button>
             </div>
-            <p className="mt-3 max-w-2xl text-sm leading-6 text-muted-foreground">
-              {site.address} — serving Surrey and all of Metro Vancouver, including Burnaby, Richmond,
-              Coquitlam, Langley, Delta, White Rock, and Abbotsford.
-            </p>
-            <div className="mt-8 overflow-hidden rounded-md border border-border">
-              <iframe
-                src={site.mapEmbed}
-                title="Google Maps location of Pacific Floors and Coatings in Surrey, BC"
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                allowFullScreen
-                className="h-[320px] w-full border-0 md:h-[420px]"
-              />
+            <div className="mt-9 grid gap-12 lg:grid-cols-[1.4fr_1fr]">
+              <div className="overflow-hidden rounded-md border border-border shadow-xl">
+                <iframe
+                  title="Pacific Floors and Coatings Google Business Profile map"
+                  src="https://www.google.com/maps?q=Pacific%20Floors%20and%20Coatings%2C%207304%20138%20Street%2C%20Surrey%2C%20BC%20V3W%205H2%2C%20Canada&output=embed"
+                  width="100%"
+                  height="450"
+                  style={{ border: 0 }}
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  allowFullScreen
+                />
+              </div>
+              <div>
+                <div className="panel p-7">
+                  <h3 className="text-lg font-bold">Location & Contact</h3>
+                  <ul className="mt-5 space-y-5 text-sm">
+                    <li>
+                      <span className="eyebrow block">Address</span>
+                      <a href={site.mapLink} target="_blank" rel="noreferrer" className="mt-1 block font-medium hover:text-primary transition-colors">
+                        {site.address}
+                      </a>
+                    </li>
+                    <li>
+                      <span className="eyebrow block">Phone</span>
+                      <a href={site.phoneHref} className="mt-1 block font-medium hover:text-primary transition-colors">
+                        {site.phone}
+                      </a>
+                    </li>
+                    <li>
+                      <span className="eyebrow block">Email</span>
+                      <a href={`mailto:${site.email}`} className="mt-1 block font-medium hover:text-primary transition-colors">
+                        {site.email}
+                      </a>
+                    </li>
+                    <li>
+                      <span className="eyebrow block">Service Hours</span>
+                      <span className="mt-1 block font-medium">Mon–Sat: 8:00 AM – 6:00 PM</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
             </div>
           </div>
         </section>
 
         <CtaBand />
-
       </main>
       <Footer />
     </>
   );
 }
+
