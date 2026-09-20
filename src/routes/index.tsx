@@ -15,10 +15,10 @@ import sealed from "@/assets/sealed-concrete.jpg";
 import installer from "@/assets/installer.jpg";
 
 const images: Record<string, string> = {
-  "metallic-epoxy": metallic,
-  "flake-epoxy": flake,
-  "solid-epoxy": solid,
-  "sealed-concrete": sealed,
+  metallic,
+  flake,
+  solid,
+  sealed,
 };
 
 const faqs = [
