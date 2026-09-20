@@ -4,22 +4,35 @@ import { Footer } from "@/components/Footer";
 import { QuoteForm } from "@/components/QuoteForm";
 import { CtaBand } from "@/components/CtaBand";
 import { services, site } from "@/lib/site";
+import { serviceImage } from "@/lib/service-images";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { reviews } from "@/lib/reviews";
 import { googleReviewsQuery } from "@/lib/google-reviews.functions";
 import hero from "@/assets/hero-garage.jpg";
 import metallic from "@/assets/metallic-epoxy.jpg";
 import flake from "@/assets/flake-epoxy.jpg";
-import solid from "@/assets/solid-epoxy.jpg";
 import sealed from "@/assets/sealed-concrete.jpg";
 import installer from "@/assets/installer.jpg";
 
-const images: Record<string, string> = {
-  metallic,
-  flake,
-  solid,
-  sealed,
+const featuredSlugs = [
+  "metallic-epoxy-flooring",
+  "garage-epoxy-flooring",
+  "commercial-epoxy-flooring",
+  "concrete-floor-sealing",
+] as const;
+
+const featuredServices = featuredSlugs
+  .map((slug) => services.find((s) => s.slug === slug))
+  .filter((s): s is (typeof services)[number] => Boolean(s))
+  .slice(0, 4);
+
+const serviceAlt: Record<string, string> = {
+  "metallic-epoxy-flooring": "Glossy black and silver metallic epoxy floor installed in a Surrey, BC home",
+  "garage-epoxy-flooring": "Grey flake epoxy garage floor coating in a two-car Surrey garage",
+  "commercial-epoxy-flooring": "Commercial epoxy floor coating in a Metro Vancouver warehouse with safety line markings",
+  "concrete-floor-sealing": "Polished and sealed concrete floor finished by Pacific Floors and Coatings",
 };
+
 
 const faqs = [
   {
@@ -80,27 +93,65 @@ export const Route = createFileRoute("/")({
         type: "application/ld+json",
         children: JSON.stringify({
           "@context": "https://schema.org",
-          "@type": "LocalBusiness",
+          "@type": "HomeAndConstructionBusiness",
+          "@id": "https://epoxy-clone-pro.lovable.app/#business",
           name: "Pacific Floors and Coatings",
-          description: "Epoxy flooring and concrete coating contractor serving Surrey, BC and Metro Vancouver.",
+          url: "https://epoxy-clone-pro.lovable.app/",
+          description:
+            "Epoxy flooring and concrete coating contractor serving Surrey, BC and Metro Vancouver. Metallic, flake, and solid epoxy floors for garages, commercial, and industrial spaces.",
           telephone: "+1-236-878-3386",
           email: "pacificfloorsandcoatings@gmail.com",
+          priceRange: "$$",
           address: {
             "@type": "PostalAddress",
             streetAddress: "7304 138 Street",
             addressLocality: "Surrey",
             addressRegion: "BC",
-            postalCode: "V6J 3Y7",
+            postalCode: "V3W 5H2",
             addressCountry: "CA",
           },
-          areaServed: "Surrey, British Columbia",
+          geo: { "@type": "GeoCoordinates", latitude: 49.1339, longitude: -122.8639 },
+          hasMap: site.mapLink,
+          openingHoursSpecification: [
+            {
+              "@type": "OpeningHoursSpecification",
+              dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+              opens: "08:00",
+              closes: "18:00",
+            },
+          ],
+          areaServed: [
+            "Surrey",
+            "Burnaby",
+            "Richmond",
+            "Coquitlam",
+            "Langley",
+            "Delta",
+            "White Rock",
+            "Abbotsford",
+            "Metro Vancouver",
+          ].map((name) => ({ "@type": "City", name })),
+          hasOfferCatalog: {
+            "@type": "OfferCatalog",
+            name: "Epoxy flooring and concrete coating services",
+            itemListElement: services.slice(0, 12).map((s) => ({
+              "@type": "Offer",
+              itemOffered: {
+                "@type": "Service",
+                name: s.title,
+                url: `https://epoxy-clone-pro.lovable.app/services/${s.slug}`,
+              },
+            })),
+          },
           sameAs: [
             "https://www.tiktok.com/@pacificfloorsandcoatings",
             "https://www.instagram.com/pacificfloorsandcoatings",
             "https://www.facebook.com/profile.php?id=61575485291064",
+            "https://www.linkedin.com/in/pacificfloorsandcoatingsca/",
           ],
-          aggregateRating: { "@type": "AggregateRating", ratingValue: "5", reviewCount: "30" },
+          aggregateRating: { "@type": "AggregateRating", ratingValue: "4.9", reviewCount: "30" },
         }),
+
       },
       {
         type: "application/ld+json",
@@ -194,7 +245,7 @@ function Home() {
             </Link>
           </div>
           <div className="mt-9 grid gap-5 sm:grid-cols-2">
-            {services.map((s) => (
+            {featuredServices.map((s) => (
               <Link
                 key={s.slug}
                 to="/services/$slug"
@@ -202,8 +253,8 @@ function Home() {
                 className="group relative overflow-hidden rounded-md border border-border"
               >
                 <img
-                  src={images[s.image]}
-                  alt={s.title}
+                  src={serviceImage(s)}
+                  alt={serviceAlt[s.slug] ?? `${s.title} in Surrey, BC`}
                   loading="lazy"
                   width={1200}
                   height={800}
@@ -215,7 +266,16 @@ function Home() {
                 </div>
               </Link>
             ))}
+          </div>
+          <div className="mt-9 text-center">
+            <Link
+              to="/services"
+              className="inline-flex rounded-md bg-primary px-7 py-3 text-xs font-bold text-primary-foreground transition hover:brightness-110"
+            >
+              View All Services
+            </Link>
           </div></div>
+
         </section>
 
         <section className="border-y border-primary/25 bg-background py-20">
@@ -298,7 +358,41 @@ function Home() {
           </div>
         </section>
 
+        <section className="border-t border-border bg-surface py-20">
+          <div className="mx-auto max-w-[1170px] px-5">
+            <p className="eyebrow">Find us</p>
+            <div className="flex flex-wrap items-end justify-between gap-4">
+              <h2 className="mt-2 text-3xl font-black sm:text-[36px]">
+                Visit Our Surrey, BC Epoxy Flooring Shop
+              </h2>
+              <a
+                href={site.mapLink}
+                target="_blank"
+                rel="noreferrer noopener"
+                className="text-sm font-semibold text-primary"
+              >
+                Open in Google Maps →
+              </a>
+            </div>
+            <p className="mt-3 max-w-2xl text-sm leading-6 text-muted-foreground">
+              {site.address} — serving Surrey and all of Metro Vancouver, including Burnaby, Richmond,
+              Coquitlam, Langley, Delta, White Rock, and Abbotsford.
+            </p>
+            <div className="mt-8 overflow-hidden rounded-md border border-border">
+              <iframe
+                src={site.mapEmbed}
+                title="Google Maps location of Pacific Floors and Coatings in Surrey, BC"
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                allowFullScreen
+                className="h-[320px] w-full border-0 md:h-[420px]"
+              />
+            </div>
+          </div>
+        </section>
+
         <CtaBand />
+
       </main>
       <Footer />
     </>
