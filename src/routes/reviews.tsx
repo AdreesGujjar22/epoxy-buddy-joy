@@ -11,20 +11,25 @@ export const Route = createFileRoute("/reviews")({
   loader: ({ context }) => context.queryClient.ensureQueryData(googleReviewsQuery),
   head: () => ({
     meta: [
-      { title: "Customer Reviews | Pacific Floors and Coatings Surrey BC" },
+      { title: "Epoxy Flooring Reviews Surrey | Pacific Floors & Coatings" },
       {
         name: "description",
         content:
-          "Read Google reviews from Surrey and Metro Vancouver homeowners and businesses who chose Pacific Floors and Coatings for epoxy flooring.",
+          "Read Google reviews from Surrey and Metro Vancouver homeowners and businesses who chose Pacific Floors & Coatings for durable epoxy flooring installations.",
       },
-      { property: "og:title", content: "Customer Reviews | Pacific Floors and Coatings" },
+      { property: "og:title", content: "Epoxy Flooring Reviews Surrey | Pacific Floors & Coatings" },
       {
         property: "og:description",
-        content: "Google-rated epoxy flooring reviews from Surrey, BC and Metro Vancouver.",
+        content: "Read Google reviews from Surrey and Metro Vancouver homeowners and businesses who chose Pacific Floors & Coatings for durable epoxy flooring installations.",
       },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "https://epoxy-clone-pro.lovable.app/reviews" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Epoxy Flooring Reviews Surrey | Pacific Floors & Coatings" },
+      {
+        name: "twitter:description",
+        content: "Read Google reviews from Surrey and Metro Vancouver homeowners and businesses who chose Pacific Floors & Coatings for durable epoxy flooring installations.",
+      },
     ],
     links: [{ rel: "canonical", href: "https://epoxy-clone-pro.lovable.app/reviews" }],
   }),
