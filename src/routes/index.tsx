@@ -134,7 +134,7 @@ export const Route = createFileRoute("/")({
           hasOfferCatalog: {
             "@type": "OfferCatalog",
             name: "Epoxy flooring and concrete coating services",
-            itemListElement: services.slice(0, 12).map((s) => ({
+            itemListElement: services.map((s) => ({
               "@type": "Offer",
               itemOffered: {
                 "@type": "Service",

@@ -4,7 +4,7 @@ import { Footer } from "@/components/Footer";
 import { QuoteForm } from "@/components/QuoteForm";
 import { CtaBand } from "@/components/CtaBand";
 import { Breadcrumbs, breadcrumbSchema } from "@/components/Breadcrumbs";
-import { services, serviceGroups, SITE_URL } from "@/lib/site";
+import { services, SITE_URL } from "@/lib/site";
 import { serviceImage } from "@/lib/service-images";
 
 const TITLE = "Epoxy Flooring Services in Surrey, BC | Pacific Floors";
