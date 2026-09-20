@@ -196,7 +196,7 @@ function Home() {
                 className="group relative overflow-hidden rounded-md border border-border"
               >
                 <img
-                  src={images[s.slug]}
+                  src={images[s.image]}
                   alt={s.title}
                   loading="lazy"
                   width={1200}
