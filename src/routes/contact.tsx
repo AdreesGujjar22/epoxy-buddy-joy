@@ -8,20 +8,25 @@ export const Route = createFileRoute("/contact")({
   staticData: { sitemap: true },
   head: () => ({
     meta: [
-      { title: "Contact Pacific Floors and Coatings | Epoxy Quote Surrey BC" },
+      { title: "Contact Pacific Floors & Coatings | Epoxy Quotes Surrey BC" },
       {
         name: "description",
         content:
-          "Request a free on-site epoxy flooring estimate in Surrey, BC. Call (236) 878-3386 or send Pacific Floors and Coatings your project details.",
+          "Request a free on-site epoxy flooring estimate in Surrey, BC. Call (236) 878-3386 or send Pacific Floors & Coatings your project details for a fast quote.",
       },
-      { property: "og:title", content: "Contact Pacific Floors and Coatings" },
+      { property: "og:title", content: "Contact Pacific Floors & Coatings | Epoxy Quotes Surrey BC" },
       {
         property: "og:description",
-        content: "Free on-site epoxy flooring estimates in Surrey, BC and Metro Vancouver.",
+        content: "Request a free on-site epoxy flooring estimate in Surrey, BC. Call (236) 878-3386 or send Pacific Floors & Coatings your project details for a fast quote.",
       },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "https://epoxy-clone-pro.lovable.app/contact" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Contact Pacific Floors & Coatings | Epoxy Quotes Surrey BC" },
+      {
+        name: "twitter:description",
+        content: "Request a free on-site epoxy flooring estimate in Surrey, BC. Call (236) 878-3386 or send Pacific Floors & Coatings your project details for a fast quote.",
+      },
     ],
     links: [{ rel: "canonical", href: "https://epoxy-clone-pro.lovable.app/contact" }],
   }),

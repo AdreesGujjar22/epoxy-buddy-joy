@@ -52,21 +52,27 @@ export const Route = createFileRoute("/")({
   staticData: { sitemap: true },
   head: () => ({
     meta: [
-      { title: "Epoxy Flooring Company in Surrey BC | Pacific Floors and Coatings" },
+      { title: "Epoxy Flooring Company in Surrey | Pacific Floors & Coatings" },
       {
         name: "description",
         content:
-          "Professional epoxy flooring installation in Surrey, BC and Metro Vancouver. Metallic, flake, solid, and clear coatings for garages, shops, and warehouses.",
+          "Pacific Floors & Coatings installs metallic, flake, and solid epoxy flooring in Surrey, BC. Durable garage, commercial & industrial coatings. Free estimates.",
       },
-      { property: "og:title", content: "Epoxy Flooring Company in Surrey BC | Pacific Floors and Coatings" },
+      { property: "og:title", content: "Epoxy Flooring Company in Surrey | Pacific Floors & Coatings" },
       {
         property: "og:description",
         content:
-          "Metallic, flake, solid, and sealed concrete floors installed in Surrey, BC and Metro Vancouver. Free on-site estimates.",
+          "Pacific Floors & Coatings installs metallic, flake, and solid epoxy flooring in Surrey, BC. Durable garage, commercial & industrial coatings. Free estimates.",
       },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "https://epoxy-clone-pro.lovable.app/" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Epoxy Flooring Company in Surrey | Pacific Floors & Coatings" },
+      {
+        name: "twitter:description",
+        content:
+          "Pacific Floors & Coatings installs metallic, flake, and solid epoxy flooring in Surrey, BC. Durable garage, commercial & industrial coatings. Free estimates.",
+      },
     ],
     links: [{ rel: "canonical", href: "https://epoxy-clone-pro.lovable.app/" }],
     scripts: [
