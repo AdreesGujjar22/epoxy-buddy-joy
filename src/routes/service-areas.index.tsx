@@ -38,12 +38,12 @@ function ServiceAreasPage() {
     <>
       <Header />
       <main>
-        <section className="mx-auto max-w-4xl px-4 py-16">
+        <section className="mx-auto max-w-4xl px-4 py-16 text-pretty">
           <p className="eyebrow">Local service areas</p>
           <h1 className="mt-3 text-4xl font-black sm:text-5xl">
             Epoxy flooring across Surrey BC and Metro Vancouver
           </h1>
-          <ul className="mt-8 space-y-4 text-sm text-muted-foreground">
+          <ul className="mt-8 space-y-4 text-sm text-muted-foreground font-medium">
             <li>
               <strong className="text-foreground">On-site consultations:</strong> we visit
               commercial, industrial, and residential floor preparation questions directly at your
@@ -61,18 +61,18 @@ function ServiceAreasPage() {
         </section>
 
         <section className="mx-auto max-w-6xl px-4 pb-20">
-          <h2 className="text-2xl font-extrabold">Choose your city</h2>
+          <h2 className="text-2xl font-black">Choose your city</h2>
           <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {serviceAreas.map((a) => (
               <Link
                 key={a.slug}
                 to="/service-areas/$slug"
                 params={{ slug: a.slug }}
-                className="interactive-panel group block p-5"
+                className="panel group block p-5 transition hover:border-primary shadow-sm hover:shadow-md"
               >
-                <h3 className="text-lg font-bold">Epoxy Flooring in {a.name}</h3>
-                <p className="mt-2 text-sm text-muted-foreground">{a.blurb}</p>
-                <span className="mt-4 inline-block text-sm font-semibold text-primary">
+                <h3 className="text-lg font-bold group-hover:text-primary transition-colors">Epoxy Flooring in {a.name}</h3>
+                <p className="mt-2 text-sm text-muted-foreground leading-6">{a.blurb}</p>
+                <span className="mt-4 inline-block text-sm font-bold text-primary">
                   View {a.name} page →
                 </span>
               </Link>
