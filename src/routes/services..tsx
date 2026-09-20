@@ -14,7 +14,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
-export const Route = createFileRoute("/services/$slug")({
+export const Route = createFileRoute("/services/")({
   staticData: { sitemap: true },
   loader: ({ params }) => {
     const service = findService(params.slug);

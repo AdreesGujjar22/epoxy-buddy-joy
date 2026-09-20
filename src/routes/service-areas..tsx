@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 
 const BASE = "https://epoxy-clone-pro.lovable.app";
 
-export const Route = createFileRoute("/service-areas/$slug")({
+export const Route = createFileRoute("/service-areas/")({
   staticData: { sitemap: true },
   loader: ({ params }) => {
     const area = findServiceArea(params.slug);
