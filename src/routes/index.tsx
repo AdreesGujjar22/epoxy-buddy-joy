@@ -320,7 +320,41 @@ function Home() {
           </div>
         </section>
 
+        <section className="border-t border-border bg-surface py-20">
+          <div className="mx-auto max-w-[1170px] px-5">
+            <p className="eyebrow">Find us</p>
+            <div className="flex flex-wrap items-end justify-between gap-4">
+              <h2 className="mt-2 text-3xl font-black sm:text-[36px]">
+                Visit Our Surrey, BC Epoxy Flooring Shop
+              </h2>
+              <a
+                href={site.mapLink}
+                target="_blank"
+                rel="noreferrer noopener"
+                className="text-sm font-semibold text-primary"
+              >
+                Open in Google Maps →
+              </a>
+            </div>
+            <p className="mt-3 max-w-2xl text-sm leading-6 text-muted-foreground">
+              {site.address} — serving Surrey and all of Metro Vancouver, including Burnaby, Richmond,
+              Coquitlam, Langley, Delta, White Rock, and Abbotsford.
+            </p>
+            <div className="mt-8 overflow-hidden rounded-md border border-border">
+              <iframe
+                src={site.mapEmbed}
+                title="Google Maps location of Pacific Floors and Coatings in Surrey, BC"
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                allowFullScreen
+                className="h-[320px] w-full border-0 md:h-[420px]"
+              />
+            </div>
+          </div>
+        </section>
+
         <CtaBand />
+
       </main>
       <Footer />
     </>
