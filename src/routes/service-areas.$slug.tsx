@@ -126,7 +126,7 @@ function AreaPage() {
                   key={s.slug}
                   to="/services/$slug"
                   params={{ slug: s.slug }}
-                  className="panel block p-5 transition hover:border-primary"
+                  className="interactive-panel block p-5"
                 >
                   <h3 className="text-base font-bold">{s.title}</h3>
                   <p className="mt-2 text-sm text-muted-foreground">{s.short}</p>

@@ -40,7 +40,7 @@ function ServiceAreasPage() {
       <main>
         <section className="mx-auto max-w-4xl px-4 py-16">
           <p className="eyebrow">Local service areas</p>
-          <h1 className="mt-3 text-4xl font-extrabold sm:text-5xl">
+          <h1 className="mt-3 text-4xl font-black sm:text-5xl">
             Epoxy flooring across Surrey BC and Metro Vancouver
           </h1>
           <ul className="mt-8 space-y-4 text-sm text-muted-foreground">
@@ -68,7 +68,7 @@ function ServiceAreasPage() {
                 key={a.slug}
                 to="/service-areas/$slug"
                 params={{ slug: a.slug }}
-                className="panel group block p-5 transition hover:border-primary"
+                className="interactive-panel group block p-5"
               >
                 <h3 className="text-lg font-bold">Epoxy Flooring in {a.name}</h3>
                 <p className="mt-2 text-sm text-muted-foreground">{a.blurb}</p>

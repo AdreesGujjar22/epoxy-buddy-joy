@@ -179,7 +179,7 @@ export const Route = createFileRoute("/")({
 
 function Home() {
   const { data } = useSuspenseQuery(googleReviewsQuery);
-  const list = data.reviews.length > 0 ? data.reviews : reviews.map((r) => ({ ...r, relativeTime: r.location }));
+  const list = data.reviews.length > 0 ? data.reviews : reviews;
   const firstReview = list[0];
   const secondReview = list[1];
 
@@ -250,7 +250,7 @@ function Home() {
                 key={s.slug}
                 to="/services/$slug"
                 params={{ slug: s.slug }}
-                className="group relative overflow-hidden rounded-md border border-border"
+                className="interactive-panel group relative overflow-hidden"
               >
                 <img
                   src={serviceImage(s)}

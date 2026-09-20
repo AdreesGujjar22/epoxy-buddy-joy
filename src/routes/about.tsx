@@ -41,7 +41,7 @@ function About() {
       <main>
         <section className="mx-auto max-w-4xl px-4 py-16 text-center">
           <p className="eyebrow">Get to know Pacific Floors and Coatings</p>
-          <h1 className="mt-3 text-4xl font-extrabold sm:text-5xl">
+          <h1 className="mt-3 text-4xl font-black sm:text-5xl">
             Premium custom flooring across Surrey, BC
           </h1>
           <p className="mt-5 text-muted-foreground">

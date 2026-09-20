@@ -41,7 +41,7 @@ function Contact() {
         <section className="mx-auto grid max-w-6xl gap-10 px-4 py-16 md:grid-cols-2">
           <div>
             <p className="eyebrow">Contact us</p>
-            <h1 className="mt-3 text-4xl font-extrabold">Let's talk about your floor</h1>
+            <h1 className="mt-3 text-4xl font-black">Let's talk about your floor</h1>
             <p className="mt-5 text-muted-foreground">
               Tell us a bit about the space and we'll arrange a free on-site estimate anywhere in
               Surrey, BC or Metro Vancouver.

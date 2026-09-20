@@ -56,8 +56,6 @@ export const Route = createFileRoute("/services/")({
 });
 
 function ServicesPage() {
-  const featured = services.slice(0, 6);
-
   return (
     <>
       <Header />
@@ -81,13 +79,13 @@ function ServicesPage() {
           </p>
         </section>
 
-        <section className="mx-auto grid max-w-[1170px] gap-6 px-5 pb-14 sm:grid-cols-2 lg:grid-cols-3">
-          {featured.map((s) => (
+        <section className="mx-auto grid max-w-[1170px] gap-6 px-5 pb-16 sm:grid-cols-2 lg:grid-cols-3">
+          {services.map((s) => (
             <Link
               key={s.slug}
               to="/services/$slug"
               params={{ slug: s.slug }}
-              className="group overflow-hidden rounded-xl border border-border bg-card"
+              className="interactive-panel group overflow-hidden"
             >
               <img
                 src={serviceImage(s)}
@@ -100,39 +98,10 @@ function ServicesPage() {
               />
               <div className="p-5">
                 <h2 className="text-lg font-bold">{s.title}</h2>
-                <p className="mt-2 text-sm leading-6 text-muted-foreground">{s.short}</p>
+                <p className="mt-2 text-sm text-muted-foreground">{s.short}</p>
               </div>
             </Link>
           ))}
-        </section>
-
-        <section className="border-y border-border bg-surface py-16">
-          <div className="mx-auto max-w-[1170px] px-5">
-            <h2 className="text-2xl font-extrabold">Every service we offer</h2>
-            <div className="mt-8 grid gap-10 md:grid-cols-2">
-              {serviceGroups.map((group) => (
-                <div key={group}>
-                  <p className="eyebrow">{group}</p>
-                  <ul className="mt-4 space-y-3">
-                    {services
-                      .filter((s) => s.group === group)
-                      .map((s) => (
-                        <li key={s.slug}>
-                          <Link
-                            to="/services/$slug"
-                            params={{ slug: s.slug }}
-                            className="block border-l-2 border-border pl-3 transition hover:border-primary"
-                          >
-                            <span className="text-sm font-semibold">{s.title}</span>
-                            <span className="mt-1 block text-xs leading-5 text-muted-foreground">{s.short}</span>
-                          </Link>
-                        </li>
-                      ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
-          </div>
         </section>
 
         <section className="mx-auto grid max-w-[1170px] gap-8 px-5 py-16 md:grid-cols-2">
