@@ -7,9 +7,9 @@ import { Breadcrumbs, breadcrumbSchema } from "@/components/Breadcrumbs";
 import { services, serviceGroups, SITE_URL } from "@/lib/site";
 import { serviceImage } from "@/lib/service-images";
 
-const TITLE = "Epoxy Flooring Services Surrey BC | Pacific Floors";
+const TITLE = "Epoxy Flooring Services in Surrey, BC | Pacific Floors";
 const DESCRIPTION =
-  "Epoxy, polyaspartic, and concrete coating services for garages, kitchens, warehouses, and parkades. Free on-site estimates across Surrey and Metro Vancouver.";
+  "Explore epoxy, polyaspartic, and concrete coating services for garages, kitchens, warehouses, and parkades. Free on-site estimates in Surrey & Metro Vancouver.";
 
 export const Route = createFileRoute("/services/")({
   staticData: { sitemap: true },
@@ -22,6 +22,8 @@ export const Route = createFileRoute("/services/")({
       { property: "og:type", content: "website" },
       { property: "og:url", content: `${SITE_URL}/services` },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: TITLE },
+      { name: "twitter:description", content: DESCRIPTION },
     ],
     links: [{ rel: "canonical", href: `${SITE_URL}/services` }],
     scripts: [

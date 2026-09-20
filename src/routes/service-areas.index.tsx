@@ -8,20 +8,25 @@ export const Route = createFileRoute("/service-areas/")({
   staticData: { sitemap: true },
   head: () => ({
     meta: [
-      { title: "Service Areas | Epoxy Flooring Across Surrey BC & Metro Vancouver" },
+      { title: "Epoxy Flooring Service Areas | Surrey & Metro Vancouver BC" },
       {
         name: "description",
         content:
-          "Pacific Floors and Coatings installs epoxy and concrete coatings in Surrey, Burnaby, Richmond, Delta, Coquitlam, Langley, and across Metro Vancouver.",
+          "Pacific Floors & Coatings installs epoxy and concrete coatings in Surrey, Burnaby, Richmond, Delta, Coquitlam, Langley, and communities across Metro Vancouver.",
       },
-      { property: "og:title", content: "Service Areas | Pacific Floors and Coatings" },
+      { property: "og:title", content: "Epoxy Flooring Service Areas | Surrey & Metro Vancouver BC" },
       {
         property: "og:description",
-        content: "Epoxy flooring across Surrey, BC and Metro Vancouver.",
+        content: "Pacific Floors & Coatings installs epoxy and concrete coatings in Surrey, Burnaby, Richmond, Delta, Coquitlam, Langley, and communities across Metro Vancouver.",
       },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "https://epoxy-clone-pro.lovable.app/service-areas" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Epoxy Flooring Service Areas | Surrey & Metro Vancouver BC" },
+      {
+        name: "twitter:description",
+        content: "Pacific Floors & Coatings installs epoxy and concrete coatings in Surrey, Burnaby, Richmond, Delta, Coquitlam, Langley, and communities across Metro Vancouver.",
+      },
     ],
     links: [{ rel: "canonical", href: "https://epoxy-clone-pro.lovable.app/service-areas" }],
   }),
