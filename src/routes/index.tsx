@@ -4,22 +4,35 @@ import { Footer } from "@/components/Footer";
 import { QuoteForm } from "@/components/QuoteForm";
 import { CtaBand } from "@/components/CtaBand";
 import { services, site } from "@/lib/site";
+import { serviceImage } from "@/lib/service-images";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { reviews } from "@/lib/reviews";
 import { googleReviewsQuery } from "@/lib/google-reviews.functions";
 import hero from "@/assets/hero-garage.jpg";
 import metallic from "@/assets/metallic-epoxy.jpg";
 import flake from "@/assets/flake-epoxy.jpg";
-import solid from "@/assets/solid-epoxy.jpg";
 import sealed from "@/assets/sealed-concrete.jpg";
 import installer from "@/assets/installer.jpg";
 
-const images: Record<string, string> = {
-  metallic,
-  flake,
-  solid,
-  sealed,
+const featuredSlugs = [
+  "metallic-epoxy-flooring",
+  "garage-epoxy-flooring",
+  "commercial-epoxy-flooring",
+  "concrete-floor-sealing",
+] as const;
+
+const featuredServices = featuredSlugs
+  .map((slug) => services.find((s) => s.slug === slug))
+  .filter((s): s is (typeof services)[number] => Boolean(s))
+  .slice(0, 4);
+
+const serviceAlt: Record<string, string> = {
+  "metallic-epoxy-flooring": "Glossy black and silver metallic epoxy floor installed in a Surrey, BC home",
+  "garage-epoxy-flooring": "Grey flake epoxy garage floor coating in a two-car Surrey garage",
+  "commercial-epoxy-flooring": "Commercial epoxy floor coating in a Metro Vancouver warehouse with safety line markings",
+  "concrete-floor-sealing": "Polished and sealed concrete floor finished by Pacific Floors and Coatings",
 };
+
 
 const faqs = [
   {
