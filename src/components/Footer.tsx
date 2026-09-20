@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { Facebook, Instagram, Linkedin, Music2 } from "lucide-react";
 import { Logo } from "./Logo";
 import { services, site } from "@/lib/site";
+import { Button } from "@/components/ui/button";
 
 const popular = services.slice(0, 8);
 
@@ -15,13 +16,13 @@ export function Footer() {
           </div>
           <ul className="mt-5 space-y-2 text-sm text-muted-foreground">
             <li>
-              <a href={site.phoneHref} className="hover:text-foreground">{site.phone}</a>
+              <a href={site.phoneHref} className="hover:text-foreground transition-colors">{site.phone}</a>
             </li>
             <li>
-              <a href={`mailto:${site.email}`} className="hover:text-foreground">{site.email}</a>
+              <a href={`mailto:${site.email}`} className="hover:text-foreground transition-colors">{site.email}</a>
             </li>
             <li>
-              <a href={site.mapLink} target="_blank" rel="noreferrer" className="hover:text-foreground">
+              <a href={site.mapLink} target="_blank" rel="noreferrer" className="hover:text-foreground transition-colors">
                 {site.address}
               </a>
             </li>
@@ -35,32 +36,32 @@ export function Footer() {
         </div>
         <div>
           <p className="eyebrow">Company</p>
-          <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
-            <li><Link to="/about" className="hover:text-foreground">About Us</Link></li>
-            <li><Link to="/service-areas" className="hover:text-foreground">Service Areas</Link></li>
-            <li><Link to="/reviews" className="hover:text-foreground">Reviews</Link></li>
-            <li><Link to="/contact" className="hover:text-foreground">Contact</Link></li>
+          <ul className="mt-4 space-y-2 text-sm text-muted-foreground font-medium">
+            <li><Link to="/about" className="hover:text-foreground transition-colors">About Us</Link></li>
+            <li><Link to="/service-areas" className="hover:text-foreground transition-colors">Service Areas</Link></li>
+            <li><Link to="/reviews" className="hover:text-foreground transition-colors">Reviews</Link></li>
+            <li><Link to="/contact" className="hover:text-foreground transition-colors">Contact</Link></li>
           </ul>
         </div>
         <div>
           <p className="eyebrow">Popular services</p>
-          <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
+          <ul className="mt-4 space-y-2 text-sm text-muted-foreground font-medium">
             {popular.map((s) => (
               <li key={s.slug}>
-                <Link to="/services/$slug" params={{ slug: s.slug }} className="hover:text-foreground">
+                <Link to="/services/$slug" params={{ slug: s.slug }} className="hover:text-foreground transition-colors">
                   {s.title}
                 </Link>
               </li>
             ))}
-            <li>
-              <Link to="/services" className="font-semibold text-primary hover:brightness-110">
-                All services →
-              </Link>
+            <li className="pt-2">
+              <Button asChild variant="link" className="h-auto p-0 text-primary font-bold hover:brightness-110">
+                <Link to="/services">All services →</Link>
+              </Button>
             </li>
           </ul>
         </div>
       </div>
-      <div className="border-t border-border py-5 text-center text-[10px] text-muted-foreground">
+      <div className="border-t border-border py-5 text-center text-[10px] text-muted-foreground font-semibold uppercase tracking-widest">
         © {new Date().getFullYear()} {site.name}. Proudly serving Surrey, BC and Metro Vancouver.
       </div>
     </footer>

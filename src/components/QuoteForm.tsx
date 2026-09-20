@@ -1,5 +1,6 @@
 import { useState, type FormEvent } from "react";
 import { services } from "@/lib/site";
+import { Button } from "@/components/ui/button";
 
 export function QuoteForm({ heading = "Reach out for a Free Quote!" }: { heading?: string }) {
   const [sent, setSent] = useState(false);
@@ -10,15 +11,20 @@ export function QuoteForm({ heading = "Reach out for a Free Quote!" }: { heading
   }
 
   const field =
-    "w-full rounded-md border border-border bg-background/55 px-3 py-2.5 text-xs text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none";
+    "w-full rounded-md border border-border bg-background/55 px-3 py-2.5 text-xs text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none transition-colors";
 
   return (
-    <div className="panel p-5 sm:p-7">
+    <div className="panel p-5 sm:p-7 shadow-xl">
       <h2 className="text-base font-bold">{heading}</h2>
       {sent ? (
-        <p className="mt-4 text-sm text-muted-foreground">
-          Thanks — your request was received. We usually reply within one business day.
-        </p>
+        <div className="mt-4 p-4 rounded-md bg-primary/10 border border-primary/20">
+          <p className="text-sm text-foreground font-medium">
+            Thanks! Your request was received.
+          </p>
+          <p className="mt-2 text-xs text-muted-foreground">
+            We usually reply within one business day.
+          </p>
+        </div>
       ) : (
         <form className="mt-5 grid gap-x-3 gap-y-4 sm:grid-cols-2" onSubmit={onSubmit}>
           <div>
@@ -47,12 +53,12 @@ export function QuoteForm({ heading = "Reach out for a Free Quote!" }: { heading
             By submitting this form you agree that Pacific Floors and Coatings may contact you by phone, text or email
             about your request. Consent is not a condition of purchase.
           </p>
-          <button
+          <Button
             type="submit"
-            className="sm:col-span-2 rounded-md bg-primary px-6 py-3 text-xs font-bold text-primary-foreground transition hover:brightness-110"
+            className="sm:col-span-2 h-auto py-3.5 text-xs font-bold uppercase tracking-wider"
           >
             Get My Free Quote
-          </button>
+          </Button>
         </form>
       )}
     </div>

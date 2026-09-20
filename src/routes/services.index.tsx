@@ -71,7 +71,7 @@ function ServicesPage() {
           />
         </section>
 
-        <section className="mx-auto max-w-3xl px-5 py-12 text-center">
+        <section className="mx-auto max-w-3xl px-5 py-12 text-center text-pretty">
           <p className="eyebrow">Our services</p>
           <h1 className="mt-3 text-4xl font-black sm:text-5xl">Flooring built around how you use the room</h1>
           <p className="mt-5 leading-7 text-muted-foreground">
@@ -87,7 +87,7 @@ function ServicesPage() {
               key={s.slug}
               to="/services/$slug"
               params={{ slug: s.slug }}
-              className="group overflow-hidden rounded-xl border border-border bg-card"
+              className="group overflow-hidden rounded-xl border border-border bg-card shadow-sm hover:shadow-md transition-shadow"
             >
               <img
                 src={serviceImage(s)}
@@ -99,7 +99,7 @@ function ServicesPage() {
                 className="h-52 w-full object-cover transition duration-500 group-hover:scale-105"
               />
               <div className="p-5">
-                <h2 className="text-lg font-bold">{s.title}</h2>
+                <h2 className="text-lg font-bold group-hover:text-primary transition-colors">{s.title}</h2>
                 <p className="mt-2 text-sm leading-6 text-muted-foreground">{s.short}</p>
               </div>
             </Link>
@@ -108,7 +108,7 @@ function ServicesPage() {
 
         <section className="border-y border-border bg-surface py-16">
           <div className="mx-auto max-w-[1170px] px-5">
-            <h2 className="text-2xl font-extrabold">Every service we offer</h2>
+            <h2 className="text-2xl font-black">Every service we offer</h2>
             <div className="mt-8 grid gap-10 md:grid-cols-2">
               {serviceGroups.map((group) => (
                 <div key={group}>
@@ -121,9 +121,9 @@ function ServicesPage() {
                           <Link
                             to="/services/$slug"
                             params={{ slug: s.slug }}
-                            className="block border-l-2 border-border pl-3 transition hover:border-primary"
+                            className="block border-l-2 border-border pl-3 transition hover:border-primary group"
                           >
-                            <span className="text-sm font-semibold">{s.title}</span>
+                            <span className="text-sm font-semibold group-hover:text-primary transition-colors">{s.title}</span>
                             <span className="mt-1 block text-xs leading-5 text-muted-foreground">{s.short}</span>
                           </Link>
                         </li>
@@ -135,8 +135,8 @@ function ServicesPage() {
           </div>
         </section>
 
-        <section className="mx-auto grid max-w-[1170px] gap-8 px-5 py-16 md:grid-cols-2">
-          <h2 className="text-3xl font-extrabold">
+        <section className="mx-auto grid max-w-[1170px] gap-8 px-5 py-16 md:grid-cols-2 text-pretty">
+          <h2 className="text-3xl font-black">
             Not sure which system your floor needs? We will tell you straight.
           </h2>
           <QuoteForm heading="Get your free quote" />

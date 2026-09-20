@@ -1,6 +1,7 @@
 import { queryOptions } from "@tanstack/react-query";
 import { createServerFn } from "@tanstack/react-start";
 import { site } from "@/lib/site";
+import { reviews as curatedReviews } from "@/lib/reviews";
 
 export type GoogleReview = {
   name: string;
@@ -9,6 +10,7 @@ export type GoogleReview = {
   rating: number;
   relativeTime: string;
   profilePhoto?: string | undefined;
+  verified?: boolean;
 };
 
 export type GoogleReviewsResult = {
@@ -23,6 +25,14 @@ const GATEWAY_URL = "https://connector-gateway.lovable.dev/google_maps";
 let cache: { at: number; value: GoogleReviewsResult } | null = null;
 const TTL = 1000 * 60 * 60 * 6;
 
+function fallbackReviews(): GoogleReviewsResult {
+  return {
+    rating: Number(site.rating),
+    total: curatedReviews.length,
+    reviews: curatedReviews.map((review) => ({ ...review })),
+  };
+}
+
 export const getGoogleReviews = createServerFn({ method: "GET" }).handler(
   async (): Promise<GoogleReviewsResult> => {
     if (cache && Date.now() - cache.at < TTL) return cache.value;
@@ -30,7 +40,7 @@ export const getGoogleReviews = createServerFn({ method: "GET" }).handler(
     const lovableKey = process.env["LOVABLE_API_KEY"];
     const mapsKey = process.env["GOOGLE_MAPS_API_KEY"];
     if (!lovableKey || !mapsKey) {
-      return { rating: null, total: null, reviews: [], error: "Google reviews are not configured." };
+      return fallbackReviews();
     }
 
     try {
@@ -45,7 +55,7 @@ export const getGoogleReviews = createServerFn({ method: "GET" }).handler(
       if (!response.ok) {
         const body = await response.text();
         console.error(`Google Places request failed [${response.status}]: ${body}`);
-        return { rating: null, total: null, reviews: [], error: "Could not load Google reviews." };
+        return fallbackReviews();
       }
 
       const data = (await response.json()) as {
@@ -68,19 +78,20 @@ export const getGoogleReviews = createServerFn({ method: "GET" }).handler(
           rating: r.rating ?? 5,
           relativeTime: r.relativePublishTimeDescription ?? "",
           profilePhoto: r.authorAttribution?.photoUri,
+          verified: true,
         }))
         .filter((r) => r.text.length > 0);
 
       const value: GoogleReviewsResult = {
         rating: data.rating ?? null,
         total: data.userRatingCount ?? null,
-        reviews,
+        reviews: reviews.length > 0 ? reviews : fallbackReviews().reviews,
       };
       cache = { at: Date.now(), value };
       return value;
     } catch (error) {
       console.error("Google reviews fetch error", error);
-      return { rating: null, total: null, reviews: [], error: "Could not load Google reviews." };
+      return fallbackReviews();
     }
   },
 );

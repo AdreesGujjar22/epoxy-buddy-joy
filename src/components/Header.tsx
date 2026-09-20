@@ -4,6 +4,7 @@ import { Menu } from "lucide-react";
 import { Logo } from "./Logo";
 import { site } from "@/lib/site";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Button } from "@/components/ui/button";
 
 const nav = [
   { to: "/about", label: "About" },
@@ -18,7 +19,7 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-50">
-      <div className="bg-topbar py-1.5 text-center text-[10px] font-semibold text-topbar-foreground">
+      <div className="bg-topbar py-1.5 text-center text-[10px] font-semibold text-topbar-foreground uppercase tracking-wider">
         GIVE US A CALL{" "}
         <a href={site.phoneHref} className="underline-offset-2 hover:underline">
           {site.phone}
@@ -40,21 +41,19 @@ export function Header() {
             ))}
           </nav>
           <div className="flex items-center gap-2">
-            <Link
-              to="/contact"
-              className="hidden rounded-full bg-primary px-6 py-3 text-[12px] font-bold text-primary-foreground transition hover:brightness-110 sm:inline-flex"
-            >
-              Let's Get Started
-            </Link>
+            <Button asChild size="sm" className="hidden rounded-full px-6 text-[11px] font-bold uppercase tracking-wider sm:inline-flex">
+              <Link to="/contact">Let's Get Started</Link>
+            </Button>
             <Sheet open={open} onOpenChange={setOpen}>
               <SheetTrigger asChild>
-                <button
-                  type="button"
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="size-10 rounded-md border-border transition hover:border-primary"
                   aria-label="Open menu"
-                  className="grid size-10 place-items-center rounded-md border border-border transition hover:border-primary"
                 >
                   <Menu size={18} />
-                </button>
+                </Button>
               </SheetTrigger>
               <SheetContent
                 side="right"
@@ -81,19 +80,12 @@ export function Header() {
                     ))}
                   </nav>
                   <div className="space-y-3 border-t border-border px-6 py-6">
-                    <Link
-                      to="/contact"
-                      onClick={() => setOpen(false)}
-                      className="block rounded-full bg-primary px-6 py-3 text-center text-[12px] font-bold text-primary-foreground transition hover:brightness-110"
-                    >
-                      Get a Free Quote
-                    </Link>
-                    <a
-                      href={site.phoneHref}
-                      className="block rounded-full border border-border px-6 py-3 text-center text-[12px] font-bold transition hover:border-primary"
-                    >
-                      Call {site.phone}
-                    </a>
+                    <Button asChild className="w-full rounded-full text-[12px] font-bold uppercase tracking-wider">
+                      <Link to="/contact" onClick={() => setOpen(false)}>Get a Free Quote</Link>
+                    </Button>
+                    <Button asChild variant="outline" className="w-full rounded-full text-[12px] font-bold uppercase tracking-wider">
+                      <a href={site.phoneHref}>Call {site.phone}</a>
+                    </Button>
                   </div>
                 </div>
               </SheetContent>
